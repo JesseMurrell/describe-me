@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Image, Text, StyleSheet, ActivityIndicator } from "react-native";
 import axios from "axios";
+import Constants from 'expo-constants';
+
 
 const ResultsScreen = ({ route }: any) => {
   const { image, generation, tone } = route.params;
@@ -22,7 +24,12 @@ const ResultsScreen = ({ route }: any) => {
     
         // Update the URL to your machine's IP address or Expo tunnel URL
         console.log("making request");
-        const response = await axios.post("https://3db9-209-35-93-44.ngrok-free.app/caption", formData, {
+        const ngrokURL = Constants.expoConfig?.extra?.ngrokUrl;
+        if (!ngrokURL) {
+          throw new Error("NGROK_URL is not defined in the configuration.");
+        }
+        console.log("ngrokURL", ngrokURL);
+        const response = await axios.post(`${ngrokURL}/caption`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         console.log("response", response);

@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
+    "dev": "./scripts/start.sh",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -15,6 +16,7 @@
     "@react-navigation/stack": "^7.0.14",
     "axios": "^1.7.8",
     "expo": "~52.0.11",
+    "expo-constants": "^17.0.3",
     "expo-image-picker": "~16.0.3",
     "expo-status-bar": "~2.0.0",
     "react": "18.3.1",
