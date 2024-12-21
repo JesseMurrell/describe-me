@@ -1,31 +1,32 @@
-export default ({config}) => {
+export default ({ config }) => {
   return {
+    ...config,
     name: "DescribeMe",
     slug: "DescribeMe",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/icon.png",
+    icon: "./src/assets/icon.png", // Updated path
     userInterfaceStyle: "light",
     newArchEnabled: true,
     splash: {
-      image: "./assets/splash-icon.png",
+      image: "./src/assets/splash-icon.png", // Updated path
       resizeMode: "contain",
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
     },
     ios: {
-      supportsTablet: true
+      supportsTablet: true,
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "#ffffff"
-      }
+        foregroundImage: "./src/assets/adaptive-icon.png", // Updated path
+        backgroundColor: "#ffffff",
+      },
     },
     web: {
-      favicon: "./assets/favicon.png"
+      favicon: "./src/assets/favicon.png", // Updated path
     },
     extra: {
-      ngrokUrl: process.env.NGROK_URL || "http://localhost:5001"
-    }
-  }
+      ngrokUrl: process.env.NGROK_URL || "http://localhost:5001",
+    },
+  };
 };
