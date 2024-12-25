@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, ActivityIndicator } from "react-native";
 import axios from "axios";
 import Constants from 'expo-constants';
 
-export const ResultsScreen = ({ route }: any) => {
+export const DescriptionOutputScreen = ({ route }: any) => {
   const { image, generation, tone } = route.params;
   const [caption, setCaption] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

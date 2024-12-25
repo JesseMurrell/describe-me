@@ -3,7 +3,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ImageSelectionScreen } from "@/screens/ImageSelectionScreen";
 import { DescriptionInputScreen } from "@/screens/DescriptionInputScreen";
-import { ResultsScreen } from "@/screens/ResultsScreen";
+import { DescriptionOutputScreen } from "@/screens/DescriptionOutputScreen";
 import { RootStackParamList } from "./RootStackParamList";
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -23,7 +23,7 @@ export function AppNavigator() {
       />
       <Stack.Screen
         name="Results"
-        component={ResultsScreen}
+        component={DescriptionOutputScreen}
         options={{ title: "Caption Results" }}
       />
     </Stack.Navigator>
