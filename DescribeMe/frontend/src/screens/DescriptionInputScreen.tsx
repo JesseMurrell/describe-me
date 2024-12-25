@@ -50,9 +50,9 @@ export function DescriptionInputScreen() {
           </View>
         )}
         {/* Custom Back Button */}
-        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
           <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       {/* Bottom Section */}
@@ -90,6 +90,8 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
     resizeMode: "cover",
   },
   placeholder: {

@@ -25,14 +25,16 @@ export function SelectionButton({
 }: SelectionButtonProps) {
   if (selected) {
     return (
-      <LinearGradient
-        colors={[colours.secondary, colours.primary]}
-        style={[styles.selectedBorderGradient, style]}
-      >
-        <TouchableOpacity style={styles.selectedButton} onPress={onPress}>
-          <Text style={styles.selectedText}>{title}</Text>
-        </TouchableOpacity>
-      </LinearGradient>
+      <TouchableOpacity style={styles.wrapper}>
+        <LinearGradient
+          colors={[colours.secondary, colours.primary]}
+          style={[styles.selectedBorderGradient, style]}
+        >
+          <TouchableOpacity style={styles.selectedButton} onPress={onPress}>
+            <Text style={styles.selectedText}>{title}</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </TouchableOpacity>
     );
   }
 
@@ -64,6 +66,7 @@ const baseButtonStyle = {
 
 // 2. Use StyleSheet.create() for final styles
 const styles = StyleSheet.create({
+
   // ========== UNSELECTED STYLES ==========
 
   unselectedButton: {
@@ -74,18 +77,21 @@ const styles = StyleSheet.create({
   unselectedText: {
     color: colours.black,
     fontWeight: "600",
-    fontSize: fontSizes.body.small,
+    fontSize: fontSizes.body.m,
 
   },
 
   // ========== SELECTED STYLES ==========
 
+  wrapper :{
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.9,
+    shadowRadius: 8,
+    shadowColor: colours.primary,
+  },
   selectedBorderGradient: {
     borderRadius: 100,
     padding: 5,
-    shadowOpacity: 0.95,
-    shadowRadius: 30,
-    shadowColor: colours.primary,
     elevation: 17,
   },
   selectedButton: {

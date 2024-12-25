@@ -18,11 +18,15 @@ export function SubmitButton({ title, onPress, style }: SubmitButtonProps) {
       <LinearGradient
         colors={["#888888", "#FFFFFF"]} // from gray to white
         style={styles.borderGradient}
+        start={{ x: 0, y: 0 }} // Adjust the start point
+        end={{ x: 1, y: 1 }} // Adjust the end point
       >
         {/* Inner gradient background from secondary -> primary */}
         <LinearGradient
           colors={[colours.secondary, colours.primary]}
           style={styles.innerGradient}
+          start={{ x: 0, y: 0 }} // Adjust the start point
+          end={{ x: 1, y: 1 }} // Adjust the end point
         >
           <Text style={styles.text}>{title}</Text>
         </LinearGradient>
@@ -36,8 +40,8 @@ const styles = StyleSheet.create({
     // The wrapper ensures the shadows appear outside the gradient container
     shadowColor: "#FFFFFF",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
+    shadowOpacity: 0.5,
+    shadowRadius: 15,
     elevation: 10,
     width: "90%",
     marginTop: 16,

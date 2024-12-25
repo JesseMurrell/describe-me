@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: "cover", // Ensures the image covers the space without distortion
+
   },
   placeholder: {
     flex: 1,

@@ -51,18 +51,19 @@ const styles = StyleSheet.create({
   header: {
     fontSize: fontSizes.headings.h6,
     paddingTop: 10,
-    paddingBottom: 8,
+    paddingBottom: 2,
     fontWeight: "bold",
     color: colours.white,
     marginLeft: 16,
   },
   contentContainer: {
+    marginTop: 8,
     paddingHorizontal: 18,
     alignItems: "center",
   },
   itemWrapper: {
     marginRight: 22,
-    width: '20%',
+    width: '22%',
     marginBottom: 10,
   },
 });
