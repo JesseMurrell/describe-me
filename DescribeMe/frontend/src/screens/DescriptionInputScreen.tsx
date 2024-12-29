@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Image, ActivityIndicator, Text } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ImageOptionsContainer } from "@/components/ImageOptionsContainer";
+import { ImageOptionsContainer } from "@/components/containers/ImageOptionsContainer";
 import { SingleSelectCarousel } from "@/components/SingleSelectCarousel";
 import { colours } from "@/theme/colours";
 import { fontSizes } from "@/theme/sizing";
@@ -25,7 +25,7 @@ export function DescriptionInputScreen() {
   const [selectedGeneration, setSelectedGeneration] = useState<string>("Gen-Z");
   const [selectedTone, setSelectedTone] = useState<string>("Savage");
 
-  const generationList = ["Gen-Alpha", "Gen-Z", "Millennial", "Gen-X", "Boomer"];
+  const generationList = ["Gen-Alpha", "Gen-Z", "Millennial", "Gen-X", "Boomer", "Ancient"];
   const toneList = ["Savage", "Wholesome", "Funny", "Edgy", "Chill", "Cringe"];
 
   const handleDescribeMe = async () => {

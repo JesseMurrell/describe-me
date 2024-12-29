@@ -7,9 +7,14 @@
       "@/screens/*": ["./src/screens/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/theme/*": ["./src/theme/*"],
-      "@/navigation/*": ["./src/navigation/*"]
+      "@/navigation/*": ["./src/navigation/*"],
+      "@/assets/*": ["./src/assets/*"]
     }
   },
+  "include": [
+    "src",
+    "src/types" 
+  ]
 }
   
 

@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import { RootStackParamList } from "@/navigation/RootStackParamList";
 import { HeroUploadButton } from "@/components/inputs/buttons";
 import { colours } from "@/theme/colours";
+import * as ExpoAds from "expo-ads-admob"; // For Ads
 
 export function ImageSelectionScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -16,15 +17,11 @@ export function ImageSelectionScreen() {
       if (source === "camera") {
         result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 3],
           quality: 1,
         });
       } else if (source === "gallery") {
         result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 3],
           quality: 1,
         });
       } else {
@@ -46,6 +43,15 @@ export function ImageSelectionScreen() {
       }
 
       if (!result.canceled) {
+        // Show an ad before navigating to the next screen
+        // try {
+        //   await ExpoAds.AdMobInterstitial.setAdUnitID("YOUR_AD_UNIT_ID"); // Replace with your AdMob ad unit ID
+        //   await ExpoAds.AdMobInterstitial.requestAdAsync();
+        //   await ExpoAds.AdMobInterstitial.showAdAsync();
+        // } catch (error) {
+        //   console.error("Ad failed to show: ", error);
+        // }
+
         navigation.navigate("ImagePicker", {
           selectedImage: result.assets[0].uri,
         });
@@ -64,11 +70,15 @@ export function ImageSelectionScreen() {
     ];
 
     if (Platform.OS === "ios") {
-      Alert.alert("Upload Image", "Choose an image source", options.map(opt => ({
-        text: opt.text,
-        onPress: opt.onPress,
-        style: opt.style,
-      })));
+      Alert.alert(
+        "Upload Image",
+        "Choose an image source",
+        options.map((opt) => ({
+          text: opt.text,
+          onPress: opt.onPress,
+          style: opt.style,
+        }))
+      );
     } else {
       // For Android, we can use the same approach or a custom UI (e.g., ActionSheet)
       Alert.alert("Upload Image", "Choose an image source", options);
@@ -77,7 +87,7 @@ export function ImageSelectionScreen() {
 
   return (
     <View style={styles.container}>
-      <HeroUploadButton title="Select Image\nfor an AI Description" onPress={showImagePickerOptions} />
+      <HeroUploadButton title="Select Image\nfor AI Description" onPress={showImagePickerOptions} />
     </View>
   );
 }

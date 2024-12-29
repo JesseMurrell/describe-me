@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginTop: 8,
-    paddingHorizontal: 18,
+    paddingLeft: 18,
+    paddingRight: '85%',
     alignItems: "center",
   },
   itemWrapper: {

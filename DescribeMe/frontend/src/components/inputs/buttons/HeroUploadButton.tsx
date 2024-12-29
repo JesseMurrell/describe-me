@@ -3,6 +3,7 @@ import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View, GestureResponderEvent, ViewStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { colours } from "@/theme/colours";
+import { fontSizes } from "@/theme/sizing";
 
 interface HeroUploadButtonProps {
   title: string;
@@ -31,15 +32,19 @@ export function HeroUploadButton({ title, onPress, style }: HeroUploadButtonProp
 
 const styles = StyleSheet.create({
   wrapper: {
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 20,
+    // shadowColor: colours.primary,
   },
   borderGradient: {
-    borderRadius: 0,
-    padding: 2,
+    borderRadius: 20,
+    padding: 4,
     // The thickness of this padding becomes the border thickness
   },
   innerButton: {
     backgroundColor: colours.black,
-    borderRadius: 0,
+    borderRadius: 20,
     paddingVertical: 60,
     paddingHorizontal: 60,
     alignItems: "center",
@@ -47,8 +52,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colours.primary,
-    fontSize: 16,
+    fontSize: fontSizes.headings.h3,
     fontWeight: "800",
     textAlign: "center",
+    letterSpacing: 1,
+    lineHeight: 24,
   },
 }); 
