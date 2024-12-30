@@ -15,15 +15,15 @@ import * as MediaLibrary from "expo-media-library";
 import * as Clipboard from "expo-clipboard";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "@/navigation/RootStackParamList";
-import { colours } from "../theme";
-import { AdManager } from "@/utils/AdManager";
-
+import { colours } from "@/theme/colours";
+import { fontSizes } from "@/theme/sizing";
 
 // Import the IconButton
 import { IconButton } from "@/components/inputs/buttons/IconButton";
 import SaveIcon from "@/assets/save-icon.svg";
 import ShareIconSvg from "@/assets/share-icon.svg";
 import NewFileIcon from "@/assets/new-file-icon.svg";
+import DescribeMeLogo from "@/assets/logos/describe-me-logo-coloured.svg";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -35,15 +35,13 @@ export const DescriptionOutputScreen = ({ route }: any) => {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    // Load the image to calculate its natural dimensions
     Image.getSize(
       image,
       (originalWidth, originalHeight) => {
         const containerWidth = SCREEN_WIDTH * 0.8; // 80% of screen width
         const maxHeight = Dimensions.get("window").height * 0.6667; // 66.67% of screen height
         let calculatedHeight = (originalHeight / originalWidth) * containerWidth;
-  
-        // Adjust width and height if calculated height exceeds max height
+
         if (calculatedHeight > maxHeight) {
           calculatedHeight = maxHeight;
           const adjustedWidth = (originalWidth / originalHeight) * calculatedHeight;
@@ -57,7 +55,6 @@ export const DescriptionOutputScreen = ({ route }: any) => {
       }
     );
   }, [image]);
-  
 
   const handleSave = async () => {
     try {
@@ -112,11 +109,7 @@ export const DescriptionOutputScreen = ({ route }: any) => {
   };
 
   const handleNew = () => {
-    // AdManager.showInterstitialAd(() => {
-    //   navigation.navigate("ImageSelection");
-    // });
     navigation.navigate("ImageSelection");
-
   };
 
   return (
@@ -130,22 +123,24 @@ export const DescriptionOutputScreen = ({ route }: any) => {
         {/* Main Content */}
         <View style={styles.contentContainer}>
           <View style={styles.foregroundContent}>
-          <Image
-            source={{ uri: image }}
-            style={[
-              styles.foregroundImage,
-              { width: imageSize.width, height: imageSize.height },
-            ]}
-          />
-          <TouchableOpacity
-            style={[
-              styles.captionContainer,
-              { width: imageSize.width },
-            ]}
-            onPress={handleCopy}
-          >
-            <Text style={styles.caption}>{caption}</Text>
-          </TouchableOpacity>
+            <View style={[styles.imageShadowWrapper, { width: imageSize.width, height: imageSize.height }]}>
+              <Image
+                source={{ uri: image }}
+                style={[
+                  styles.foregroundImage,
+                  { width: imageSize.width, height: imageSize.height },
+                ]}
+              />
+            </View>
+              <TouchableOpacity
+              style={[styles.captionContainer, { width: imageSize.width }]}
+              onPress={handleCopy}
+              >
+              <Text style={styles.caption}>{caption}</Text>
+              <View style={styles.watermarkInsideCaption}>
+                <DescribeMeLogo width={120} height={'32'} />
+              </View>
+              </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -184,6 +179,8 @@ const styles = StyleSheet.create({
   },
   captureContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
@@ -201,29 +198,43 @@ const styles = StyleSheet.create({
   },
   foregroundContent: {
     alignItems: "center",
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+    shadowColor: colours.white,
+    elevation: 5,
+  },
+  imageShadowWrapper: {
+    // shadowColor: "white",
+    // shadowOpacity: 1,
+    // shadowRadius: 20,
+    // shadowOffset: { width: 0, height: 0 },
+    // borderRadius: 20, // To match the image's border radius
+    // overflow: "hidden", // Ensures the image stays within the rounded corners
   },
   foregroundImage: {
-    resizeMode: "contain", // Maintain aspect ratio
+    resizeMode: "contain",
     borderRadius: 20,
     marginBottom: 20,
   },
   captionContainer: {
-    // backgroundColor: "rgba(255, 255, 255, 0.5)",
-    // borderWidth: 2, // Add border width
     borderColor: colours.secondary,
     padding: "5%",
     borderRadius: 15,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.6,
     shadowRadius: 8,
-    shadowColor: colours.primary,
+    shadowColor: colours.white,
     elevation: 5,
   },
   caption: {
-    fontSize: 16,
+    fontSize: fontSizes.body.l,
     fontWeight: "600",
     color: colours.white,
     textAlign: "center",
+  },
+  watermarkInsideCaption: {
+    marginTop: '6%', // Adjust spacing between caption and watermark
+    alignItems: "center",
   },
   actionsContainer: {
     position: "absolute",
