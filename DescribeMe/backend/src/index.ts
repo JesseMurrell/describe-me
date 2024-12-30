@@ -1,6 +1,14 @@
 import app from './app';
-import { PORT } from './config/env';
+import { PORT, ENVIRONMENT } from './config/env';
+import serverless from 'serverless-http';
 
-app.listen(Number(PORT), () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+if (ENVIRONMENT === 'dev') {
+  // Start Express server for local development
+  app.listen(Number(PORT), () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+} else {
+}
+
+// Export handler for AWS Lambda in production
+export const handler = serverless(app);

@@ -1,0 +1,17 @@
+service: describe-me-backend
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-2
+  environment:
+    ENVIRONMENT: prod
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+
+functions:
+  app:
+    handler: dist/index.handler
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
