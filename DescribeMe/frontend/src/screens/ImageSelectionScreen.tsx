@@ -5,7 +5,6 @@ import * as ImagePicker from "expo-image-picker";
 import { RootStackParamList } from "@/navigation/RootStackParamList";
 import { HeroUploadButton } from "@/components/inputs/buttons";
 import { colours } from "@/theme/colours";
-import * as ExpoAds from "expo-ads-admob"; // For Ads
 
 export function ImageSelectionScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -15,23 +14,44 @@ export function ImageSelectionScreen() {
 
     try {
       if (source === "camera") {
+        // Request camera permission
+        const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
+        if (cameraStatus !== "granted") {
+          Alert.alert(
+            "Permission Required",
+            "Camera permission is required to take a photo.",
+            [{ text: "OK" }]
+          );
+          return;
+        }
+
         result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           quality: 1,
         });
       } else if (source === "gallery") {
+        // Request media library permission
+        const { status: mediaStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (mediaStatus !== "granted") {
+          Alert.alert(
+            "Permission Required",
+            "Media library permission is required to select a photo.",
+            [{ text: "OK" }]
+          );
+          return;
+        }
+
         result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           quality: 1,
         });
       } else {
-        // For selecting from files, we use DocumentPicker (fallback for non-camera/gallery cases)
+        // Document picker for files
         const documentPicker = await import("expo-document-picker");
         result = await documentPicker.getDocumentAsync({
           type: "image/*",
         });
 
-        // Make it compatible with ImagePicker result
         if (result.type === "success") {
           result = {
             canceled: false,
@@ -43,15 +63,6 @@ export function ImageSelectionScreen() {
       }
 
       if (!result.canceled) {
-        // Show an ad before navigating to the next screen
-        // try {
-        //   await ExpoAds.AdMobInterstitial.setAdUnitID("YOUR_AD_UNIT_ID"); // Replace with your AdMob ad unit ID
-        //   await ExpoAds.AdMobInterstitial.requestAdAsync();
-        //   await ExpoAds.AdMobInterstitial.showAdAsync();
-        // } catch (error) {
-        //   console.error("Ad failed to show: ", error);
-        // }
-
         navigation.navigate("ImagePicker", {
           selectedImage: result.assets[0].uri,
         });
@@ -69,20 +80,15 @@ export function ImageSelectionScreen() {
       { text: "Cancel", style: "cancel" },
     ];
 
-    if (Platform.OS === "ios") {
-      Alert.alert(
-        "Upload Image",
-        "Choose an image source",
-        options.map((opt) => ({
-          text: opt.text,
-          onPress: opt.onPress,
-          style: opt.style,
-        }))
-      );
-    } else {
-      // For Android, we can use the same approach or a custom UI (e.g., ActionSheet)
-      Alert.alert("Upload Image", "Choose an image source", options);
-    }
+    Alert.alert(
+      "Upload Image",
+      "Choose an image source",
+      options.map((opt) => ({
+        text: opt.text,
+        onPress: opt.onPress,
+        style: opt.style,
+      }))
+    );
   };
 
   return (

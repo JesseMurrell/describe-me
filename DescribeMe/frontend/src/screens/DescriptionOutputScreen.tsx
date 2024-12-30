@@ -16,6 +16,8 @@ import * as Clipboard from "expo-clipboard";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "@/navigation/RootStackParamList";
 import { colours } from "../theme";
+import { AdManager } from "@/utils/AdManager";
+
 
 // Import the IconButton
 import { IconButton } from "@/components/inputs/buttons/IconButton";
@@ -110,7 +112,11 @@ export const DescriptionOutputScreen = ({ route }: any) => {
   };
 
   const handleNew = () => {
+    // AdManager.showInterstitialAd(() => {
+    //   navigation.navigate("ImageSelection");
+    // });
     navigation.navigate("ImageSelection");
+
   };
 
   return (

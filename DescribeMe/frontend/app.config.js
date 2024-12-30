@@ -8,6 +8,7 @@ export default ({ config }) => {
     icon: "./src/assets/icon.png", // Updated path
     userInterfaceStyle: "light",
     newArchEnabled: true,
+    assetBundlePatterns: ["**/*"],
     splash: {
       image: "./src/assets/splash-icon.png", // Updated path
       resizeMode: "contain",
@@ -27,6 +28,10 @@ export default ({ config }) => {
     },
     extra: {
       ngrokUrl: process.env.NGROK_URL || "http://localhost:5001",
+      BACKEND_URL:
+      process.env.ENVIRONMENT === 'prod'
+        ? 'https://e222d6oyll.execute-api.eu-west-2.amazonaws.com'
+        : process.env.NGROK_URL || 'http://localhost:5001',
     },
   };
 };

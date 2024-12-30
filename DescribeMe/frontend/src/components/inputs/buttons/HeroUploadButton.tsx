@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 20,
-    // shadowColor: colours.primary,
+    shadowColor: colours.primary,
   },
   borderGradient: {
     borderRadius: 20,
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
   innerButton: {
     backgroundColor: colours.black,
     borderRadius: 20,
-    paddingVertical: 60,
-    paddingHorizontal: 60,
+    paddingVertical: 50,
+    paddingHorizontal: 50,
     alignItems: "center",
     justifyContent: "center",
   },

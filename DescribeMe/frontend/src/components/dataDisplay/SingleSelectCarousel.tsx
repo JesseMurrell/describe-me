@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
   itemWrapper: {
     marginRight: 22,
     width: '22%',
-    marginBottom: 10,
+    marginBottom: 0,
   },
 });

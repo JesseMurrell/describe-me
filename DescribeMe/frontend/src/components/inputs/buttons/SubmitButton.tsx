@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     elevation: 10,
     width: "90%",
-    marginTop: 16,
+    marginTop: '6%',
   },
   borderGradient: {
     borderRadius: 100,

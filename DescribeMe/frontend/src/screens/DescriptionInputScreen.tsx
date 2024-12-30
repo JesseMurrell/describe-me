@@ -9,6 +9,7 @@ import { SubmitButton } from "@/components/SubmitButton";
 import axios from "axios";
 import Constants from 'expo-constants';
 import { PulseAnimation } from "@/components/";
+import { requestCaption } from '@/utils/api';
 
 // TypeScript imports for navigation
 import type { RouteProp } from "@react-navigation/native";
@@ -26,41 +27,34 @@ export function DescriptionInputScreen() {
   const [selectedTone, setSelectedTone] = useState<string>("Savage");
 
   const generationList = ["Gen-Alpha", "Gen-Z", "Millennial", "Gen-X", "Boomer", "Ancient"];
-  const toneList = ["Savage", "Wholesome", "Funny", "Edgy", "Chill", "Cringe"];
+  const toneList = ["Savage", "Wholesome", "Funny", "Edgy", "Brutal", "Cringe"];
+
 
   const handleDescribeMe = async () => {
     setLoading(true);
-
+  
     try {
       const formData = new FormData();
-      formData.append("file", {
+      formData.append('file', {
         uri: selectedImageUri,
-        type: "image/jpeg",
-        name: "photo.jpg",
+        type: 'image/jpeg',
+        name: 'photo.jpg',
       } as any);
-      formData.append("generation", selectedGeneration);
-      formData.append("tone", selectedTone);
-
-      const ngrokURL = Constants.expoConfig?.extra?.ngrokUrl;
-      if (!ngrokURL) {
-        throw new Error("NGROK_URL is not defined in the configuration.");
-      }
-
-      const response = await axios.post(`${ngrokURL}/caption`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      const caption = response.data.caption;
-
+      formData.append('generation', selectedGeneration);
+      formData.append('tone', selectedTone);
+  
+      const response = await requestCaption(formData);
+      const caption = response.caption;
+  
       // Navigate to the output screen with the caption
-      navigation.navigate("Results", {
+      navigation.navigate('Results', {
         image: selectedImageUri,
         generation: selectedGeneration,
         tone: selectedTone,
-        caption, // Pass the caption
+        caption,
       });
     } catch (error) {
-      console.error("Error fetching caption:", error);
+      console.error('Error fetching caption:', error);
     } finally {
       setLoading(false);
     }

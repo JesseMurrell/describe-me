@@ -1,18 +1,20 @@
 import axios from 'axios';
-import Constants from 'expo-constants';
+import { BACKEND_URL } from '@/config/env';
 
-const baseURL = Constants.expoConfig?.extra?.ngrokUrl || "http://localhost:5001";
+console.log('Using BACKEND_URL:', BACKEND_URL); // Debugging log
 
 const api = axios.create({
-  baseURL,
+  baseURL: BACKEND_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
-export const uploadImage = async (formData: FormData) => {
-  const response = await api.post('/caption', formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+export const requestCaption = async (formData: FormData) => {
+  const endpoint = '/caption'; // Explicitly define the caption endpoint
+  console.log('Making request to:', `${BACKEND_URL}${endpoint}`);
+  const response = await api.post(endpoint, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
   });
   return response.data;
 };
