@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   caption: {
-    fontSize: fontSizes.body.l,
+    fontSize: fontSizes.body.xl,
     fontWeight: "600",
     color: colours.white,
     textAlign: "center",
