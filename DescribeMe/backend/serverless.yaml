@@ -1,16 +1,24 @@
 service: describe-me-backend
+org: jessemurrell
+app: describe-me-backend
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   region: eu-west-2
+  stage: prod
   environment:
     ENVIRONMENT: prod
-    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "secretsmanager:GetSecretValue"
+      Resource: "arn:aws:secretsmanager:eu-west-2:354918392874:secret:DescribeMe/prod-C23PWY"
 
 functions:
   app:
-    handler: dist/index.handler
+    handler: dist/src/index.handler
+    timeout: 30
     events:
       - httpApi:
           path: /{proxy+}
