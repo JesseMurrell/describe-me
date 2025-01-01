@@ -32,29 +32,40 @@ export function DescriptionInputScreen() {
 
   const handleDescribeMe = async () => {
     setLoading(true);
+    console.log("[handleDescribeMe] Start uploading image...");
   
     try {
       const formData = new FormData();
+      console.log(`[handleDescribeMe] Selected image URI: ${selectedImageUri}`);
+      
       formData.append('file', {
         uri: selectedImageUri,
         type: 'image/jpeg',
         name: 'photo.jpg',
       } as any);
+  
       formData.append('generation', selectedGeneration);
       formData.append('tone', selectedTone);
   
+      console.log("[handleDescribeMe] FormData prepared. Sending requestCaption...");
       const response = await requestCaption(formData);
       const caption = response.caption;
   
-      // Navigate to the output screen with the caption
+      console.log("[handleDescribeMe] Response received:", response);
       navigation.navigate('Results', {
         image: selectedImageUri,
         generation: selectedGeneration,
         tone: selectedTone,
         caption,
       });
-    } catch (error) {
-      console.error('Error fetching caption:', error);
+    } catch (error: any) {
+      // If your error is an Axios error, you can log the response
+      if (error.response) {
+        console.error("[handleDescribeMe] Axios error data:", error.response.data);
+        console.error("[handleDescribeMe] Axios error status:", error.response.status);
+      } else {
+        console.error("[handleDescribeMe] Error fetching caption:", error.message || error);
+      }
     } finally {
       setLoading(false);
     }

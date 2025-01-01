@@ -11,47 +11,47 @@ export function ImageSelectionScreen() {
 
   const handleSelectImage = async (source: "camera" | "gallery" | "file") => {
     let result;
-
     try {
+      console.log(`[handleSelectImage] Source: ${source}`);
+      
       if (source === "camera") {
-        // Request camera permission
         const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
+        console.log(`[handleSelectImage] Camera Permission Status: ${cameraStatus}`);
+        
+        // If not granted, bail out
         if (cameraStatus !== "granted") {
-          Alert.alert(
-            "Permission Required",
-            "Camera permission is required to take a photo.",
-            [{ text: "OK" }]
-          );
+          Alert.alert("Permission Required", "Camera permission is required to take a photo.");
           return;
         }
-
+  
         result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          quality: 1,
+          quality: 0.5, // compress to half to avoid large file issues
         });
-      } else if (source === "gallery") {
-        // Request media library permission
+        console.log(`[handleSelectImage] Camera result: ${JSON.stringify(result)}`);
+      } 
+      else if (source === "gallery") {
         const { status: mediaStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        console.log(`[handleSelectImage] Gallery Permission Status: ${mediaStatus}`);
+  
         if (mediaStatus !== "granted") {
-          Alert.alert(
-            "Permission Required",
-            "Media library permission is required to select a photo.",
-            [{ text: "OK" }]
-          );
+          Alert.alert("Permission Required", "Media library permission is required to select a photo.");
           return;
         }
-
+  
         result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           quality: 1,
         });
-      } else {
-        // Document picker for files
+        console.log(`[handleSelectImage] Gallery result: ${JSON.stringify(result)}`);
+      } 
+      else {
         const documentPicker = await import("expo-document-picker");
         result = await documentPicker.getDocumentAsync({
           type: "image/*",
         });
-
+        console.log(`[handleSelectImage] Document Picker result: ${JSON.stringify(result)}`);
+  
         if (result.type === "success") {
           result = {
             canceled: false,
@@ -61,14 +61,15 @@ export function ImageSelectionScreen() {
           result = { canceled: true };
         }
       }
-
+  
       if (!result.canceled) {
+        console.log(`[handleSelectImage] Navigating to ImagePicker with URI: ${result.assets[0].uri}`);
         navigation.navigate("ImagePicker", {
           selectedImage: result.assets[0].uri,
         });
       }
     } catch (error) {
-      console.error("Error selecting image:", error);
+      console.error("[handleSelectImage] Error selecting image:", error);
     }
   };
 
