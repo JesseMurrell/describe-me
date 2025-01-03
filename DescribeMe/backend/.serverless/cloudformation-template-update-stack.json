@@ -98,7 +98,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-west-2-245aeefe-9166",
-          "S3Key": "serverless/describe-me-backend/prod/1735605050320-2024-12-31T00:30:50.320Z/describe-me-backend.zip"
+          "S3Key": "serverless/describe-me-backend/prod/1735644990634-2024-12-31T11:36:30.634Z/describe-me-backend.zip"
         },
         "Handler": "dist/src/index.handler",
         "Runtime": "nodejs18.x",
@@ -121,14 +121,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersion9EMBukAvZNrpC0PeGSnK6szvTFGzW0uRo1Xh8LorC4": {
+    "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "mJ8Paw7OOTpCp5PyDZQpiVe5/shcA4mMeEYBiKskITg="
+        "CodeSha256": "1IZgTI1o7pCrDH4LNJXQKHE43II8PU3vIlZAbAY6kbA="
       }
     },
     "HttpApi": {
@@ -237,7 +237,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersion9EMBukAvZNrpC0PeGSnK6szvTFGzW0uRo1Xh8LorC4"
+        "Ref": "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM"
       },
       "Export": {
         "Name": "sls-describe-me-backend-prod-AppLambdaFunctionQualifiedArn"

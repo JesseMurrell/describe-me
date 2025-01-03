@@ -1,4 +1,12 @@
 export default ({ config }) => {
+
+  const environment = process.env.ENVIRONMENT || 'prod';
+
+  const BACKEND_URL =
+  environment === 'prod'
+    ? 'https://e222d6oyll.execute-api.eu-west-2.amazonaws.com'
+    : (process.env.NGROK_URL || 'http://localhost:5001');
+
   return {
     ...config,
     owner: "jessekmurrell",
@@ -8,7 +16,7 @@ export default ({ config }) => {
     sdkVersion: "52.0.0",
     platforms: ["ios", "android"],
     orientation: "portrait",
-    icon: "./src/assets/icon.png",
+    icon: "./src/assets/describe-me-app-logo.png",
     userInterfaceStyle: "light",
     newArchEnabled: true,
     assetBundlePatterns: ["**/*"],
@@ -19,13 +27,18 @@ export default ({ config }) => {
       policy: "appVersion",
     },
     splash: {
-      image: "./src/assets/describe-me-app-logo.png",
+      image: "./src/assets/describe-me-app-logo-splash.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
     ios: {
+      buildNumber: "2",
       bundleIdentifier: "com.jessekmurrell.describeme", // <-- key fix here
-      supportsTablet: true,
+      supportsTablet: false,
+      infoPlist: {
+        ...config.ios?.infoPlist,
+        ITSAppUsesNonExemptEncryption: false, // No non-exempt encryption used
+      },
     },
     android: {
       package: "com.jessekmurrell.describeme",
@@ -42,10 +55,8 @@ export default ({ config }) => {
         projectId: "f950506a-c33c-49f0-a302-444c03361f82",
       },
       ngrokUrl: process.env.NGROK_URL || "http://localhost:5001",
-      BACKEND_URL:
-        process.env.ENVIRONMENT === 'prod'
-          ? 'https://e222d6oyll.execute-api.eu-west-2.amazonaws.com'
-          : process.env.NGROK_URL || 'http://localhost:5001',
+      environment,
+      BACKEND_URL,
     },
   };
 };
