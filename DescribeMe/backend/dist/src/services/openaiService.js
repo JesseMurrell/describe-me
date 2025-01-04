@@ -15,12 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateCaption = generateCaption;
 const openai_1 = __importDefault(require("openai"));
 const env_1 = require("../config/env");
-const openai = new openai_1.default({
-    apiKey: env_1.OPENAI_API_KEY,
-});
+let openai = null;
+function getOpenAIApiInstance() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!openai) {
+            const apiKey = (0, env_1.getOpenAIKey)();
+            console.log("Creating a new OpenAI instance. Key is empty?", !apiKey);
+            openai = new openai_1.default({ apiKey });
+        }
+        return openai;
+    });
+}
 function generateCaption(dataUrl, generation, tone) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d;
+        console.log("Attempting to generate caption");
+        const openai = yield getOpenAIApiInstance();
         const response = yield openai.chat.completions.create({
             model: "gpt-4o",
             messages: [
@@ -33,6 +43,7 @@ function generateCaption(dataUrl, generation, tone) {
                 },
             ],
         });
+        console.log(`Caption response: ${JSON.stringify(response)}`);
         return (_d = (_c = (_b = (_a = response.choices[0]) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.trim()) !== null && _d !== void 0 ? _d : 'No caption generated.';
     });
 }

@@ -1,32 +1,37 @@
+// env.ts
 import dotenv from 'dotenv';
 import AWS from 'aws-sdk';
 
 dotenv.config();
 
+export const ENVIRONMENT = process.env.ENVIRONMENT || 'prod';
+export const PORT = process.env.PORT || '5001';
+console.log(ENVIRONMENT)
+
 let OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 
-if (process.env.ENVIRONMENT === 'prod') {
-  const secretsManager = new AWS.SecretsManager();
-
-  const getSecret = async () => {
+export async function loadSecrets() {
+  console.log("Loading secrets from secrets manager")
+  if (ENVIRONMENT !== 'dev') {
+    console.log(`Environment = ${ENVIRONMENT}, fetching key from Secrets Manager`);
+    const secretsManager = new AWS.SecretsManager();
     try {
+      console.log("Making secrets manager request")
       const secret = await secretsManager
         .getSecretValue({ SecretId: 'DescribeMe/prod' })
         .promise();
 
       if ('SecretString' in secret) {
         const secretValue = JSON.parse(secret.SecretString || '{}');
-        OPENAI_API_KEY = secretValue.OPENAI_API_KEY || OPENAI_API_KEY;
+        OPENAI_API_KEY = secretValue["DescribeMe/prod"] || '';
       }
+      console.log(`OpenAI key acquired: ${OPENAI_API_KEY.slice(-4)}`);
     } catch (err) {
-      console.error('Error fetching secret from AWS Secrets Manager:', err);
+      console.error("Error fetching secret from AWS Secrets Manager:", err);
     }
-  };
-
-  // Fetch the secret asynchronously (can be awaited if needed)
-  getSecret();
+  }
 }
 
-export const ENVIRONMENT = process.env.ENVIRONMENT || 'dev';
-export const PORT = process.env.PORT || '5001';
-export { OPENAI_API_KEY };
+export function getOpenAIKey(): string {
+  return OPENAI_API_KEY;
+}

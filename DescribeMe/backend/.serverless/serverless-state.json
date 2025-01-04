@@ -118,7 +118,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-eu-west-2-245aeefe-9166",
-                "S3Key": "serverless/describe-me-backend/prod/1735644990634-2024-12-31T11:36:30.634Z/describe-me-backend.zip"
+                "S3Key": "serverless/describe-me-backend/prod/1735913551947-2025-01-03T14:12:31.947Z/describe-me-backend.zip"
               },
               "Handler": "dist/src/index.handler",
               "Runtime": "nodejs18.x",
@@ -141,14 +141,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM": {
+          "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "1IZgTI1o7pCrDH4LNJXQKHE43II8PU3vIlZAbAY6kbA="
+              "CodeSha256": "k8pPebtBRlXeowzsYLxw8eilO0pwMBpkTXCaTVVeGTU="
             }
           },
           "HttpApi": {
@@ -254,7 +254,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM"
+              "Ref": "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM"
             },
             "Export": {
               "Name": "sls-describe-me-backend-prod-AppLambdaFunctionQualifiedArn"
@@ -318,7 +318,7 @@
         "memory": 1024,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM"
+        "versionLogicalId": "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM"
       }
     },
     "configValidationMode": "warn",
@@ -332,6 +332,16 @@
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "package": {
+        "exclude": [
+          ".env",
+          ".env.*"
+        ],
+        "artifactsS3KeyDirname": "serverless/describe-me-backend/prod/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-eu-west-2-245aeefe-9166",
+        "artifact": "/Users/jessemurrell/Documents/local dev/describe-me/DescribeMe/backend/.serverless/describe-me-backend.zip",
+        "artifactDirectoryName": "serverless/describe-me-backend/prod/1735913551947-2025-01-03T14:12:31.947Z"
       }
     },
     "app": "describe-me-backend",
@@ -342,7 +352,7 @@
     "artifact": "/Users/jessemurrell/Documents/local dev/describe-me/DescribeMe/backend/.serverless/describe-me-backend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/describe-me-backend/prod/1735644990634-2024-12-31T11:36:30.634Z",
+    "artifactDirectoryName": "serverless/describe-me-backend/prod/1735913551947-2025-01-03T14:12:31.947Z",
     "artifact": "describe-me-backend.zip"
   }
 }

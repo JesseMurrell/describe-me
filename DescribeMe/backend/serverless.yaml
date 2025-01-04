@@ -1,3 +1,4 @@
+# serverless.yaml
 service: describe-me-backend
 org: jessemurrell
 app: describe-me-backend
@@ -23,3 +24,8 @@ functions:
       - httpApi:
           path: /{proxy+}
           method: ANY
+
+package:
+  exclude:
+    - .env
+    - .env.*  # optionally exclude all .env.* files

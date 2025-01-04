@@ -1,32 +1,19 @@
-import AWS from 'aws-sdk';
 import OpenAI from 'openai';
+import { getOpenAIKey } from '../config/env';
 
 let openai: OpenAI | null = null;
 
-async function getOpenAIApiInstance() {
+async function getOpenAIApiInstance(): Promise<OpenAI> {
   if (!openai) {
-    // Start with your environment variable (i.e. if ENVIRONMENT=dev, you may already have a valid .env key)
-    let apiKey = process.env.OPENAI_API_KEY || '';
-
-    // If in production, fetch from Secrets Manager
-    if (process.env.ENVIRONMENT === 'prod') {
-      const secretsManager = new AWS.SecretsManager();
-      const secret = await secretsManager
-        .getSecretValue({ SecretId: 'DescribeMe/prod' })
-        .promise();
-
-      if ('SecretString' in secret) {
-        const secretValue = JSON.parse(secret.SecretString || '{}');
-        apiKey = secretValue.OPENAI_API_KEY || apiKey;
-      }
-    }
-
+    const apiKey = getOpenAIKey();
+    console.log("Creating a new OpenAI instance. Key is empty?", !apiKey);
     openai = new OpenAI({ apiKey });
   }
   return openai;
 }
 
 export async function generateCaption(dataUrl: string, generation: string, tone: string): Promise<string> {
+  console.log("Attempting to generate caption");
   const openai = await getOpenAIApiInstance();
 
   const response = await openai.chat.completions.create({
@@ -41,6 +28,6 @@ export async function generateCaption(dataUrl: string, generation: string, tone:
       },
     ],
   });
-
+  console.log(`Caption response: ${JSON.stringify(response)}`);
   return response.choices[0]?.message?.content?.trim() ?? 'No caption generated.';
 }
