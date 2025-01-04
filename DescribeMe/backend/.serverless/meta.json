@@ -132,7 +132,7 @@
                     "Properties": {
                       "Code": {
                         "S3Bucket": "serverless-framework-deployments-eu-west-2-245aeefe-9166",
-                        "S3Key": "serverless/describe-me-backend/prod/1735644990634-2024-12-31T11:36:30.634Z/describe-me-backend.zip"
+                        "S3Key": "serverless/describe-me-backend/prod/1735913551947-2025-01-03T14:12:31.947Z/describe-me-backend.zip"
                       },
                       "Handler": "dist/src/index.handler",
                       "Runtime": "nodejs18.x",
@@ -155,14 +155,14 @@
                       "AppLogGroup"
                     ]
                   },
-                  "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM": {
+                  "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM": {
                     "Type": "AWS::Lambda::Version",
                     "DeletionPolicy": "Retain",
                     "Properties": {
                       "FunctionName": {
                         "Ref": "AppLambdaFunction"
                       },
-                      "CodeSha256": "1IZgTI1o7pCrDH4LNJXQKHE43II8PU3vIlZAbAY6kbA="
+                      "CodeSha256": "k8pPebtBRlXeowzsYLxw8eilO0pwMBpkTXCaTVVeGTU="
                     }
                   },
                   "HttpApi": {
@@ -271,7 +271,7 @@
                   "AppLambdaFunctionQualifiedArn": {
                     "Description": "Current Lambda function version",
                     "Value": {
-                      "Ref": "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM"
+                      "Ref": "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM"
                     },
                     "Export": {
                       "Name": "sls-describe-me-backend-prod-AppLambdaFunctionQualifiedArn"
@@ -334,8 +334,18 @@
                 "memory": 1024,
                 "runtime": "nodejs18.x",
                 "vpc": {},
-                "versionLogicalId": "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM"
+                "versionLogicalId": "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM"
               }
+            },
+            "package": {
+              "exclude": [
+                ".env",
+                ".env.*"
+              ],
+              "artifactsS3KeyDirname": "serverless/describe-me-backend/prod/code-artifacts",
+              "deploymentBucket": "serverless-framework-deployments-eu-west-2-245aeefe-9166",
+              "artifact": "/Users/jessemurrell/Documents/local dev/describe-me/DescribeMe/backend/.serverless/describe-me-backend.zip",
+              "artifactDirectoryName": "serverless/describe-me-backend/prod/1735913551947-2025-01-03T14:12:31.947Z"
             }
           },
           "configFileDirPath": "/Users/jessemurrell/Documents/local dev/describe-me/DescribeMe/backend",
@@ -480,7 +490,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-eu-west-2-245aeefe-9166",
-                  "S3Key": "serverless/describe-me-backend/prod/1735644990634-2024-12-31T11:36:30.634Z/describe-me-backend.zip"
+                  "S3Key": "serverless/describe-me-backend/prod/1735913551947-2025-01-03T14:12:31.947Z/describe-me-backend.zip"
                 },
                 "Handler": "dist/src/index.handler",
                 "Runtime": "nodejs18.x",
@@ -503,14 +513,14 @@
                 "AppLogGroup"
               ]
             },
-            "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM": {
+            "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "AppLambdaFunction"
                 },
-                "CodeSha256": "1IZgTI1o7pCrDH4LNJXQKHE43II8PU3vIlZAbAY6kbA="
+                "CodeSha256": "k8pPebtBRlXeowzsYLxw8eilO0pwMBpkTXCaTVVeGTU="
               }
             },
             "HttpApi": {
@@ -619,7 +629,7 @@
             "AppLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM"
+                "Ref": "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM"
               },
               "Export": {
                 "Name": "sls-describe-me-backend-prod-AppLambdaFunctionQualifiedArn"
@@ -682,18 +692,28 @@
           "memory": 1024,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "AppLambdaVersionD0wJ9RFhWrVFOEovBJc1m9hSLBmjWmajFGnLy5FZXHM"
+          "versionLogicalId": "AppLambdaVersionNEIlTZ3quZWcX9nXlP4R8pyDV9GueBaCOECVAntSM"
         }
+      },
+      "package": {
+        "exclude": [
+          ".env",
+          ".env.*"
+        ],
+        "artifactsS3KeyDirname": "serverless/describe-me-backend/prod/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-eu-west-2-245aeefe-9166",
+        "artifact": "/Users/jessemurrell/Documents/local dev/describe-me/DescribeMe/backend/.serverless/describe-me-backend.zip",
+        "artifactDirectoryName": "serverless/describe-me-backend/prod/1735913551947-2025-01-03T14:12:31.947Z"
       }
     },
-    "serviceRawFile": "service: describe-me-backend\norg: jessemurrell\napp: describe-me-backend\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: eu-west-2\n  stage: prod\n  environment:\n    ENVIRONMENT: prod\n  iamRoleStatements:\n    - Effect: \"Allow\"\n      Action:\n        - \"secretsmanager:GetSecretValue\"\n      Resource: \"arn:aws:secretsmanager:eu-west-2:354918392874:secret:DescribeMe/prod-C23PWY\"\n\nfunctions:\n  app:\n    handler: dist/src/index.handler\n    timeout: 30\n    events:\n      - httpApi:\n          path: /{proxy+}\n          method: ANY",
+    "serviceRawFile": "# serverless.yaml\nservice: describe-me-backend\norg: jessemurrell\napp: describe-me-backend\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: eu-west-2\n  stage: prod\n  environment:\n    ENVIRONMENT: prod\n  iamRoleStatements:\n    - Effect: \"Allow\"\n      Action:\n        - \"secretsmanager:GetSecretValue\"\n      Resource: \"arn:aws:secretsmanager:eu-west-2:354918392874:secret:DescribeMe/prod-C23PWY\"\n\nfunctions:\n  app:\n    handler: dist/src/index.handler\n    timeout: 30\n    events:\n      - httpApi:\n          path: /{proxy+}\n          method: ANY\n\npackage:\n  exclude:\n    - .env\n    - .env.*  # optionally exclude all .env.* files",
     "command": [
       "deploy"
     ],
     "options": {},
     "error": null,
     "params": {},
-    "machineId": "88230e86bd344c63424c93c86ec8cab3",
+    "machineId": "3a0aa98afcefa310cf633e9932703d1e",
     "stage": "prod",
     "accessKeyV2": "<REDACTED>",
     "accessKeyV1": "<REDACTED>",
@@ -725,12 +745,12 @@
     "serviceUniqueId": "arn:aws:cloudformation:eu-west-2:354918392874:stack/describe-me-backend-prod/ed7e30c0-c6c2-11ef-9887-06cb3ed0b191",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:eu-west-2:354918392874:stack/describe-me-backend-prod/ed7e30c0-c6c2-11ef-9887-06cb3ed0b191",
     "serviceProviderAwsCfStackCreated": "2024-12-30T15:29:58.545Z",
-    "serviceProviderAwsCfStackUpdated": "2024-12-31T11:36:33.334Z",
+    "serviceProviderAwsCfStackUpdated": "2025-01-03T14:10:47.263Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "AppLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:eu-west-2:354918392874:function:describe-me-backend-prod-app:13",
+        "OutputValue": "arn:aws:lambda:eu-west-2:354918392874:function:describe-me-backend-prod-app:29",
         "Description": "Current Lambda function version",
         "ExportName": "sls-describe-me-backend-prod-AppLambdaFunctionQualifiedArn"
       },
