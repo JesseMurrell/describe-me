@@ -1,1 +1,1 @@
-// export  * from './AdManager'
+export  * from './AdManager'

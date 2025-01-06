@@ -1,20 +1,28 @@
-// import { AdMobInterstitial } from "expo-ads-admob";
+import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 
-// export class AdManager {
-//   static async showInterstitialAd(onAdDismiss?: () => void) {
-//     try {
-//       AdMobInterstitial.setAdUnitID("YOUR_AD_UNIT_ID"); // Replace with your AdMob unit ID
-//       await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
-//       await AdMobInterstitial.showAdAsync();
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9777815065538075/4212536773';
 
-//       if (onAdDismiss) {
-//         AdMobInterstitial.addEventListener("interstitialDidDismiss", onAdDismiss);
-//       }
-//     } catch (error) {
-//       console.error("Ad failed to load or show:", error);
-//       if (onAdDismiss) {
-//         onAdDismiss(); // Proceed even if the ad fails
-//       }
-//     }
-//   }
-// }
+class AdManager {
+  static showInterstitialAd(onAdDismiss?: () => void) {
+    const interstitialAd = InterstitialAd.createForAdRequest(adUnitId);
+
+    interstitialAd.onAdEvent((type, error) => {
+      if (type === AdEventType.LOADED) {
+        interstitialAd.show();
+      } else if (type === AdEventType.CLOSED) {
+        if (onAdDismiss) {
+          onAdDismiss();
+        }
+      } else if (type === AdEventType.ERROR) {
+        console.error('Ad failed to load:', error);
+        if (onAdDismiss) {
+          onAdDismiss();
+        }
+      }
+    });
+
+    interstitialAd.load();
+  }
+}
+
+export default AdManager;

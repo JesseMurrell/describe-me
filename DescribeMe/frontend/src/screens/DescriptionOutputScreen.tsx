@@ -17,6 +17,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "@/navigation/RootStackParamList";
 import { colours } from "@/theme/colours";
 import { fontSizes } from "@/theme/sizing";
+import { AdManager } from "@/utils/AdManager";
 
 // Import the IconButton
 import { IconButton } from "@/components/inputs/buttons/IconButton";
@@ -109,7 +110,10 @@ export const DescriptionOutputScreen = ({ route }: any) => {
   };
 
   const handleNew = () => {
-    navigation.navigate("ImageSelection");
+    AdManager.showInterstitialAd(() => {
+      // This will execute after the ad is dismissed
+      navigation.navigate("ImageSelection");
+    });
   };
 
   return (
