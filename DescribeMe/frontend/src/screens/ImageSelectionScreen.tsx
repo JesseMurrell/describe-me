@@ -1,9 +1,10 @@
 import React from "react";
-import { View, StyleSheet, Alert, Platform } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { RootStackParamList } from "@/navigation/RootStackParamList";
 import { HeroUploadButton } from "@/components/inputs/buttons";
+import { RootStackParamList } from "@/navigation/RootStackParamList";
+import { requestPermission } from "@/utils/permissions";
 import { colours } from "@/theme/colours";
 
 export function ImageSelectionScreen() {
@@ -11,47 +12,28 @@ export function ImageSelectionScreen() {
 
   const handleSelectImage = async (source: "camera" | "gallery" | "file") => {
     let result;
+
     try {
-      console.log(`[handleSelectImage] Source: ${source}`);
-      
       if (source === "camera") {
-        const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
-        console.log(`[handleSelectImage] Camera Permission Status: ${cameraStatus}`);
-        
-        // If not granted, bail out
-        if (cameraStatus !== "granted") {
-          Alert.alert("Permission Required", "Camera permission is required to take a photo.");
-          return;
-        }
-  
+        const hasPermission = await requestPermission("camera");
+        if (!hasPermission) return;
+
         result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          quality: 0.5, // compress to half to avoid large file issues
+          quality: 0.5,
         });
-        console.log(`[handleSelectImage] Camera result: ${JSON.stringify(result)}`);
-      } 
-      else if (source === "gallery") {
-        const { status: mediaStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        console.log(`[handleSelectImage] Gallery Permission Status: ${mediaStatus}`);
-  
-        if (mediaStatus !== "granted") {
-          Alert.alert("Permission Required", "Media library permission is required to select a photo.");
-          return;
-        }
-  
+      } else if (source === "gallery") {
+        const hasPermission = await requestPermission("photoLibrary");
+        if (!hasPermission) return;
+
         result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           quality: 1,
         });
-        console.log(`[handleSelectImage] Gallery result: ${JSON.stringify(result)}`);
-      } 
-      else {
+      } else {
         const documentPicker = await import("expo-document-picker");
-        result = await documentPicker.getDocumentAsync({
-          type: "image/*",
-        });
-        console.log(`[handleSelectImage] Document Picker result: ${JSON.stringify(result)}`);
-  
+        result = await documentPicker.getDocumentAsync({ type: "image/*" });
+
         if (result.type === "success") {
           result = {
             canceled: false,
@@ -61,15 +43,13 @@ export function ImageSelectionScreen() {
           result = { canceled: true };
         }
       }
-  
+
       if (!result.canceled) {
-        console.log(`[handleSelectImage] Navigating to ImagePicker with URI: ${result.assets[0].uri}`);
-        navigation.navigate("ImagePicker", {
-          selectedImage: result.assets[0].uri,
-        });
+        navigation.navigate("ImagePicker", { selectedImage: result.assets[0].uri });
       }
     } catch (error) {
-      console.error("[handleSelectImage] Error selecting image:", error);
+      console.error("[handleSelectImage] Error:", error);
+      Alert.alert("Error", "An unexpected error occurred while selecting the image.");
     }
   };
 
