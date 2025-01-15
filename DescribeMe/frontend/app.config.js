@@ -3,9 +3,9 @@ export default ({ config }) => {
   const environment = process.env.ENVIRONMENT || 'prod';
 
   const BACKEND_URL =
-  environment === 'prod'
-    ? 'https://e222d6oyll.execute-api.eu-west-2.amazonaws.com'
-    : (process.env.NGROK_URL || 'http://localhost:5001');
+    environment === 'prod'
+      ? 'https://e222d6oyll.execute-api.eu-west-2.amazonaws.com'
+      : (process.env.NGROK_URL || 'http://localhost:5001');
 
   return {
     ...config,
@@ -32,11 +32,13 @@ export default ({ config }) => {
       backgroundColor: "#ffffff",
     },
     ios: {
-      buildNumber: "2",
-      bundleIdentifier: "com.jessekmurrell.describeme", // <-- key fix here
+      buildNumber: "4",
+      bundleIdentifier: "com.jessekmurrell.describeme",
       supportsTablet: false,
       infoPlist: {
         ...config.ios?.infoPlist,
+        NSCameraUsageDescription: "DescribeMe uses the camera to take photos for generating AI-powered captions. For example, take a photo of a dog, and get a caption like 'Paws-itively adorable!'",
+        NSPhotoLibraryUsageDescription: "DescribeMe accesses your photo library to select images for generating AI-powered captions. For example, choose a picture of coffee, and get a caption like 'Mood: Espresso yourself.'",
         ITSAppUsesNonExemptEncryption: false, // No non-exempt encryption used
       },
     },
